@@ -58,11 +58,26 @@
     constructor(id, data) {
       const thisProduct = this;
       console.log('new Product:', thisProduct);
-      thisProduct.renderInMenu();
+
       thisProduct.id = id;
       thisProduct.data = data;
+      thisProduct.renderInMenu();
+      thisProduct.initAccordin();
     }
     renderInMenu() {
+      const thisProduct = this;
+      /*generate HTML based on template*/
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+      console.log('generatedHTML', generatedHTML);
+      /*create element using utils.CreateElementFromHTML*/
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+      console.log('thisProduct.element', thisProduct.element);
+      /*find menu container*/
+      const menuContainer = document.querySelector(select.containerOf.menu);
+      /*add element to menu*/
+      menuContainer.appendChild(thisProduct.element);
+    }
+    initAccordin() {
       const thisProduct = this;
     }
   }
