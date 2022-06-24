@@ -79,15 +79,39 @@
     }
     initAccordin() {
       const thisProduct = this;
+      console.log('thisProduct', thisProduct);
+      console.log('thisProductelement!!!', thisProduct.element);
+
       /* find the clickable trigger (the element that should react to clicking) */
-      const clickableTrigger = classNames.menuProduct.wrapperActive;
+      const clickableTrigger = thisProduct.element.querySelector(
+        select.menuProduct.clickable
+      );
+
+      console.log('clickableTrigger', clickableTrigger);
 
       /* START: add event listener to clickable trigger on event click */
       clickableTrigger.addEventListener('click', function (event) {
         /* prevent default action for event */
+        event.preventDefault();
         /* find active product (product that has active class) */
+        const activeProduct = document.querySelector(
+          classNames.menuProduct.wrapperActive
+        );
+        console.log(
+          'classNames.menuProduct.wrapperActive:',
+          classNames.menuProduct.wrapperActive
+        );
+        console.log('activeProduct!!!!!', activeProduct);
         /* if there is active product and it's not thisProduct.element, remove class active from it */
+        console.log('thisProduct.element', thisProduct.element);
+        if (activeProduct && activeProduct != thisProduct.element) {
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+        }
         /* toggle active class on thisProduct.element */
+        console.log('thisProduct', thisProduct);
+        thisProduct.element.classList.toggle(
+          classNames.menuProduct.wrapperActive
+        );
       });
     }
   }
