@@ -94,6 +94,7 @@
   class Product {
     constructor(id, data) {
       const thisProduct = this;
+      thisProduct.dom = {};
 
       thisProduct.id = id;
       thisProduct.data = data;
@@ -118,7 +119,7 @@
     }
     getElements() {
       const thisProduct = this;
-
+      thisProduct.dom = {};
       thisProduct.accordionTrigger = thisProduct.element.querySelector(
         select.menuProduct.clickable
       );
@@ -143,7 +144,7 @@
     }
     initAccordion() {
       const thisProduct = this;
-
+      thisProduct.dom = {};
       /* find the clickable trigger (the element that should react to clicking) */
 
       /* START: add event listener to clickable trigger on event click */
@@ -168,6 +169,7 @@
     }
     initOrderForm() {
       const thisProduct = this;
+      thisProduct.dom = {};
       console.log('initOrderForm');
 
       thisProduct.form.addEventListener('submit', function (event) {
@@ -188,14 +190,15 @@
     }
     initAmountWidget() {
       const thisProduct = this;
+      thisProduct.dom = {};
       thisProduct.amountWidget = new amountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
-        console.log('duuupaaaa');
       });
     }
     processOrder() {
       const thisProduct = this;
+      thisProduct.dom = {};
       console.log('processOrder');
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
@@ -325,6 +328,19 @@
       const event = new Event('updated');
       thisWidget.element.dispatchEvent(event);
       console.log(thisWidget.element.dispatchEvent(event));
+    }
+  }
+  class cart {
+    constructor(element) {
+      const thisCart = this;
+      thisCart.products = [];
+      thisCart.getElements(element);
+      console.log('new cart:', thisCart);
+    }
+    getElements(element) {
+      const thisCart = this;
+      thisCart.dom = {};
+      thisCart.dom.wrapper = element;
     }
   }
   const app = {
