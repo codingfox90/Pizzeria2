@@ -63,7 +63,7 @@
       thisProduct.data = data;
       thisProduct.renderInMenu();
       thisProduct.getElements();
-      thisProduct.initAccordin();
+      thisProduct.initAccordion();
     }
     renderInMenu() {
       const thisProduct = this;
@@ -97,7 +97,7 @@
         select.menuProduct.priceElem
       );
     }
-    initAccordin() {
+    initAccordion() {
       const thisProduct = this;
       console.log('thisProduct', thisProduct);
       console.log('thisProductelement!!!', thisProduct.element);
@@ -110,6 +110,7 @@
         event.preventDefault();
         /* find active product (product that has active class) */
         const activeProduct = document.querySelector(
+          '.product',
           '.' + classNames.menuProduct.wrapperActive
         );
         console.log(
@@ -129,7 +130,14 @@
         );
       });
     }
+    initOrderForm() {
+      const thisProduct = this;
+    }
+    processOrder() {
+      const thisProduct = this;
+    }
   }
+
   const app = {
     initMenu: function () {
       const thisApp = this;
