@@ -96,6 +96,9 @@
       thisProduct.priceElem = thisProduct.element.querySelector(
         select.menuProduct.priceElem
       );
+      thisProduct.imageWrapper = thisProduct.element.querySelector(
+        select.menuProduct.imageWrapper
+      );
     }
     initAccordion() {
       const thisProduct = this;
@@ -163,19 +166,42 @@
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
+          console.log('dupa', '.' + paramId + '-' + optionId);
+          console.log('dupowrap', thisProduct.imageWrapper);
+
+          const optionSelected =
+            formData[paramId] && formData[paramId].includes(optionId);
           console.log(optionId, option);
           console.log('parrram', formData[paramId]);
           console.log('inluuude', formData[paramId].includes(optionId));
           // check if there is param with a name of paramId in formData and if it includes optionId
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
+          if (optionSelected) {
+            console.log('dupowrap', thisProduct.imageWrapper);
+            const optionImage = thisProduct.imageWrapper.querySelector(
+              '.' + paramId + '-' + optionId
+            );
+            console.log('optionDupa', optionImage);
+
+            if (optionImage) {
+              if (optionSelected)
+                optionImage.classList.add(classNames.menuProduct.imageVisible);
+              console.log('img selectdupa:', optionImage);
+            }
             // check if the option is not default
             console.log('optiiion', option.default);
             if (!option.default) {
+              console.log('wraaappper', thisProduct.imageWrapper.innerHTML);
               // add option price to price variable
               price = price + option.price;
             }
           } else {
             // check if the option is default
+            const optionImage = thisProduct.imageWrapper.querySelector(
+              '.' + paramId + '-' + optionId
+            );
+            if (optionImage) {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
             if (option.default) {
               // reduce price variable
               price = price - option.price;
