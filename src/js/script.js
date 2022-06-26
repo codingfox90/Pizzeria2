@@ -152,14 +152,17 @@
         /* prevent default action for event */
         event.preventDefault();
         /* find active product (product that has active class) */
-        const activeProduct = document.querySelector(
+        const activeProducts = document.querySelectorAll(
           '.product',
           '.' + classNames.menuProduct.wrapperActive
         );
-
-        /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if (activeProduct && activeProduct != thisProduct.element) {
-          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+        for (let activeProduct of activeProducts) {
+          /* if there is active product and it's not thisProduct.element, remove class active from it */
+          if (activeProduct && activeProduct != thisProduct.element) {
+            activeProduct.classList.remove(
+              classNames.menuProduct.wrapperActive
+            );
+          }
         }
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(
@@ -186,6 +189,7 @@
       thisProduct.cartButton.addEventListener('click', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
     initAmountWidget() {
@@ -266,6 +270,10 @@
       console.log('dupacena', price);
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
+    }
+    addToCart() {
+      const thisProduct = this;
+      app.cart.add(thisProduct);
     }
   }
   class amountWidget {
@@ -351,6 +359,10 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+    add(menuProduct) {
+      //const thisCart = this;
+      console.log('adding product:', menuProduct);
     }
   }
   const app = {
