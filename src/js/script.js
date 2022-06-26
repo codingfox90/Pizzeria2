@@ -265,6 +265,7 @@
           }
         }
       }
+      thisProduct.priceSingle = price;
       /*multiply price by amount*/
       price *= thisProduct.amountWidget.value;
       console.log('dupacena', price);
@@ -273,7 +274,58 @@
     }
     addToCart() {
       const thisProduct = this;
-      app.cart.add(thisProduct);
+      app.cart.add(thisProduct.prepareCartProduct());
+    }
+    prepareCartProduct() {
+      const thisProduct = this;
+      console.log('duuuuup', thisProduct);
+      const priceSingle = thisProduct.priceSingle;
+      const price = priceSingle * thisProduct.amountWidget.value;
+
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        priceSingle: priceSingle,
+        price: price,
+      };
+      return productSummary;
+    }
+    prepareCartProductParams() {
+      const thisProduct = this;
+      thisProduct.dom = {};
+      console.log('processOrder');
+
+      // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+
+      const params = {};
+
+      // for very category (param)
+      for (let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+
+        // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
+        params[paramId] = {
+          label: param.label,
+          options: {},
+        };
+
+        // for every option in this category
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected =
+            formData[paramId] && formData[paramId].includes(optionId);
+
+          if (optionSelected) {
+            // option is selected!
+            params[paramId].options = option;
+          }
+        }
+      }
+      console.log('dupparams', params);
+      return params;
     }
   }
   class amountWidget {
