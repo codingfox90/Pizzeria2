@@ -283,6 +283,7 @@
       const price = priceSingle * thisProduct.amountWidget.value;
 
       const productSummary = {
+        params: thisProduct.prepareCartProductParams(),
         id: thisProduct.id,
         name: thisProduct.data.name,
         amount: thisProduct.amountWidget.value,
@@ -405,6 +406,9 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(
         select.cart.toggleTrigger
       );
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(
+        select.cart.productList
+      );
     }
     initActions() {
       const thisCart = this;
@@ -415,6 +419,16 @@
     add(menuProduct) {
       //const thisCart = this;
       console.log('adding product:', menuProduct);
+      const thisCart = this;
+      /*generate HTML based on template*/
+      const generatedHTML = templates.cartProduct(menuProduct);
+
+      /*create element using utils.CreateElementFromHTML*/
+      thisCart.element = utils.createDOMFromHTML(generatedHTML);
+
+      /*add element to menu*/
+      console.log('beep', thisCart.dom.productList);
+      thisCart.dom.productList.appendChild(thisCart.element);
     }
   }
   const app = {
