@@ -222,31 +222,22 @@
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log('dupa', '.' + paramId + '-' + optionId);
-          console.log('dupowrap', thisProduct.imageWrapper);
 
           const optionSelected =
             formData[paramId] && formData[paramId].includes(optionId);
           console.log(optionId, option);
-          console.log('parrram', formData[paramId]);
-          console.log('inluuude', formData[paramId].includes(optionId));
           // check if there is param with a name of paramId in formData and if it includes optionId
           if (optionSelected) {
-            console.log('dupowrap', thisProduct.imageWrapper);
             const optionImage = thisProduct.imageWrapper.querySelector(
               '.' + paramId + '-' + optionId
             );
-            console.log('optionDupa', optionImage);
 
             if (optionImage) {
               if (optionSelected)
                 optionImage.classList.add(classNames.menuProduct.imageVisible);
-              console.log('img selectdupa:', optionImage);
             }
             // check if the option is not default
-            console.log('optiiion', option.default);
             if (!option.default) {
-              console.log('wraaappper', thisProduct.imageWrapper.innerHTML);
               // add option price to price variable
               price = price + option.price;
             }
@@ -268,7 +259,6 @@
       thisProduct.priceSingle = price;
       /*multiply price by amount*/
       price *= thisProduct.amountWidget.value;
-      console.log('dupacena', price);
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
@@ -278,7 +268,6 @@
     }
     prepareCartProduct() {
       const thisProduct = this;
-      console.log('duuuuup', thisProduct);
       const priceSingle = thisProduct.priceSingle;
       const price = priceSingle * thisProduct.amountWidget.value;
 
@@ -321,11 +310,12 @@
 
           if (optionSelected) {
             // option is selected!
-            params[paramId].options = option;
+            console.log('dupopt', params[paramId].options);
+            params[paramId].options[optionId] = option.label;
           }
         }
       }
-      console.log('dupparams', params);
+      console.log('DUUUPA', params);
       return params;
     }
   }
@@ -428,7 +418,6 @@
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
       /*add element to menu*/
-      console.log('beep', thisCart.dom.productList);
       thisCart.dom.productList.appendChild(generatedDOM);
       new CartProduct(menuProduct, generatedDOM);
       console.log('thisCart.products:', thisCart.products);
@@ -475,16 +464,11 @@
         thisCartProduct.amountWidget
       );
       thisCartProduct.dom.wrapper.addEventListener('updated', function () {
-        console.log('dupabeeep');
         console.log(thisCartProduct.amountWidget);
         thisCartProduct.amount = thisCartProduct.amountWidget;
-        console.log('dupaamount', thisCartProduct.amount.value);
-        console.log('dupasingle', thisCartProduct.priceSingle);
 
         thisCartProduct.price =
           thisCartProduct.amount.value * thisCartProduct.priceSingle;
-        console.log('dupaprice', thisCartProduct.dom.price.innerHTML);
-        console.log('dupaprice2', thisCartProduct.price);
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
     }
