@@ -388,6 +388,20 @@
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(
         select.cart.productList
       );
+      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(
+        select.cart.deliveryFee
+      );
+      thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(
+        select.cart.subtotalPrice
+      );
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(
+        select.cart.totalPrice
+      );
+      console.log('getElements:', thisCart.dom.subtotalPrice);
+      console.log('getElements:', thisCart.dom.totalPrice);
+      thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(
+        select.cart.totalNumber
+      );
     }
     initActions() {
       const thisCart = this;
@@ -405,7 +419,45 @@
 
       /*add element to menu*/
       thisCart.dom.productList.appendChild(generatedDOM);
-      new CartProduct(menuProduct, generatedDOM);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      thisCart.update();
+    }
+    update() {
+      const thisCart = this;
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+      let totalNumber = 0;
+      let subtotalPrice = 0;
+      console.log('thisCart.products:', thisCart.products);
+      for (thisCart.product of thisCart.products) {
+        console.log('thisCartProduct', thisCart.product);
+        totalNumber = totalNumber + thisCart.product.amount;
+        subtotalPrice = subtotalPrice + thisCart.product.price;
+      }
+      if (totalNumber > 0) {
+        thisCart.totalPrice = subtotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+        thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
+        thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+        thisCart.dom.totalNumber.innerHTML = totalNumber;
+      } else {
+        thisCart.totalPrice = subtotalPrice;
+        thisCart.dom.deliveryFee.innerHTML = 0;
+        for (let totalPriceItem of thisCart.dom.totalPrice) {
+          totalPriceItem.innerHTML = thisCart.totalPrice;
+        }
+        thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+        thisCart.dom.totalNumber.innerHTML = totalNumber;
+      }
+      console.log(
+        'totalNumber:',
+        totalNumber,
+        'subtotalPrice:',
+        subtotalPrice,
+        'deliveryFee:',
+        deliveryFee,
+        'thisCart.totalPrice',
+        thisCart.totalPrice
+      );
     }
   }
   class CartProduct {
