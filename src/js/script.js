@@ -436,9 +436,10 @@
       for (thisCart.product of thisCart.products) {
         console.log('thisCartProduct', thisCart.product);
         totalNumber = totalNumber + thisCart.product.amount;
+        console.log('duupa', thisCart.product.amount);
         subtotalPrice = subtotalPrice + thisCart.product.price;
       }
-      if (totalNumber > 0 || thisCart.product.amount.value > 0) {
+      if (totalNumber > 0 /*|| thisCart.product.amount.value > 0*/) {
         thisCart.totalPrice = subtotalPrice + deliveryFee;
         thisCart.dom.deliveryFee.innerHTML = deliveryFee;
         thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
@@ -450,8 +451,13 @@
         thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
         thisCart.dom.totalNumber.innerHTML = totalNumber;
       } else {
-        thisCart.totalPrice = subtotalPrice;
+        thisCart.dom.totalPrice.innerHTML = 0;
         thisCart.dom.deliveryFee.innerHTML = 0;
+        thisCart.dom.subtotalPrice.innerHTML = 0;
+        thisCart.dom.totalNumber.innerHTML = 0;
+        for (let totalPriceItem of thisCart.dom.totalPrice) {
+          totalPriceItem.innerHTML = 0;
+        }
       }
 
       console.log(
@@ -503,10 +509,10 @@
       );
 
       thisCartProduct.dom.wrapper.addEventListener('updated', function () {
-        thisCartProduct.amount = thisCartProduct.amountWidget;
-
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        /*pointer*/
         thisCartProduct.price =
-          thisCartProduct.amount.value * thisCartProduct.priceSingle;
+          thisCartProduct.amount * thisCartProduct.priceSingle;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       });
     }
