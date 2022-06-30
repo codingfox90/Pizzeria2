@@ -439,15 +439,16 @@
         thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
         thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
         thisCart.dom.totalNumber.innerHTML = totalNumber;
-      } else {
-        thisCart.totalPrice = subtotalPrice;
-        thisCart.dom.deliveryFee.innerHTML = 0;
         for (let totalPriceItem of thisCart.dom.totalPrice) {
           totalPriceItem.innerHTML = thisCart.totalPrice;
         }
         thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
         thisCart.dom.totalNumber.innerHTML = totalNumber;
+      } else {
+        thisCart.totalPrice = subtotalPrice;
+        thisCart.dom.deliveryFee.innerHTML = 0;
       }
+
       console.log(
         'totalNumber:',
         totalNumber,
