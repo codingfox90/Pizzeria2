@@ -511,8 +511,9 @@
         subtotalPrice: thisCart.subtotalPrice,
         totalNumber: thisCart.totalNumber,
         deliveryFee: thisCart.dom.deliveryFee.innerHTML,
-        products: thisCart.products,
+        products: [],
       };
+      console.log('dupahint', payload.products);
       for (let prod of thisCart.products) {
         payload.products.push(prod.getData());
       }
@@ -528,6 +529,7 @@
       thisCartProduct.amount = menuProduct.amount;
       thisCartProduct.priceSingle = menuProduct.priceSingle;
       thisCartProduct.price = menuProduct.price;
+      thisCartProduct.params = menuProduct.params;
       thisCartProduct.getElements(element);
       thisCartProduct.initAmountWidget();
       thisCartProduct.initActions();
@@ -588,9 +590,8 @@
       const thisCartProduct = this;
       const priceSingle = thisCartProduct.priceSingle;
       const price = priceSingle * thisCartProduct.amountWidget.value;
-      console.log('dupa', thisCartProduct);
       const cartProductSummary = {
-        //params: new Cart.prepareCartProductParams(),
+        params: thisCartProduct.params,
         id: thisCartProduct.id,
         name: thisCartProduct.name,
         amount: thisCartProduct.amount,
